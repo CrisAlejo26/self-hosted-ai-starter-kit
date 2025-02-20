@@ -1,0 +1,11 @@
+FROM postgres:16-alpine
+
+# Instalar dependencias necesarias
+RUN apk add --no-cache --update git make gcc musl-dev clang llvm-dev cmake
+
+# Clonar y compilar pgvector
+RUN git clone --depth 1 --branch v0.5.0 https://github.com/pgvector/pgvector.git /tmp/pgvector \
+    && cd /tmp/pgvector \
+    && make \
+    && make install \
+    && rm -rf /tmp/pgvector
